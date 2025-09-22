@@ -1,0 +1,144 @@
+.generation-filter {
+  max-width: 1200px;
+  margin: 0 auto 30px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.generation-filter h3 {
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.generation-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 15px;
+  justify-items: center;
+}
+
+.generation-btn {
+  width: 100%;
+  max-width: 320px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid transparent;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.generation-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 1);
+}
+
+.generation-btn.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.generation-btn.active .generation-info {
+  color: white;
+}
+
+.generation-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  color: #333;
+}
+
+.generation-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.generation-range {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.generation-count {
+  font-size: 0.8rem;
+  font-weight: 600;
+  background: rgba(78, 205, 196, 0.2);
+  padding: 4px 8px;
+  border-radius: 10px;
+  margin-top: 5px;
+}
+
+.generation-btn.active .generation-count {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .generation-filter {
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+  
+  .generation-buttons {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 12px;
+  }
+  
+  .generation-btn {
+    padding: 12px;
+    max-width: none;
+  }
+  
+  .generation-filter h3 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+  }
+  
+  .generation-name {
+    font-size: 1rem;
+  }
+  
+  .generation-range {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .generation-filter {
+    padding: 12px;
+  }
+  
+  .generation-buttons {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .generation-btn {
+    padding: 10px;
+  }
+  
+  .generation-name {
+    font-size: 0.9rem;
+  }
+  
+  .generation-range {
+    font-size: 0.75rem;
+  }
+  
+  .generation-count {
+    font-size: 0.7rem;
+  }
+}
