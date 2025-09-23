@@ -3,8 +3,11 @@ import './App.css'
 import PokemonList from './components/PokemonList'
 import SearchBar from './components/SearchBar'
 import GenerationFilter from './components/GenerationFilter'
+import TeamViewer from './components/TeamViewer'
+import FloatingTeamButton from './components/FloatingTeamButton'
 import { getAllPokemonBatched } from './services/pokemonApi'
 import { filterPokemonByGeneration, countPokemonByGeneration } from './utils/generationUtils'
+import useTeamManager from './hooks/useTeamManager'
 
 function App() {
   const [allPokemon, setAllPokemon] = useState([])
@@ -14,6 +17,19 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedGeneration, setSelectedGeneration] = useState('all')
   const [pokemonCounts, setPokemonCounts] = useState({})
+  const [showTeamModal, setShowTeamModal] = useState(false)
+
+  // Hook personalizado para manejo de equipo y favoritos
+  const {
+    favorites,
+    team,
+    toggleFavorite,
+    toggleTeamMember,
+    isFavorite,
+    isInTeam,
+    clearTeam,
+    clearFavorites
+  } = useTeamManager(allPokemon)
 
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -145,6 +161,50 @@ function App() {
     setFilteredPokemon(filtered)
   }
 
+  // Funciones de traducción para pasar a TeamViewer
+  const translateType = (type) => {
+    const translations = {
+      normal: 'Normal',
+      fire: 'Fuego',
+      water: 'Agua',
+      electric: 'Eléctrico',
+      grass: 'Planta',
+      ice: 'Hielo',
+      fighting: 'Lucha',
+      poison: 'Veneno',
+      ground: 'Tierra',
+      flying: 'Volador',
+      psychic: 'Psíquico',
+      bug: 'Bicho',
+      rock: 'Roca',
+      ghost: 'Fantasma',
+      dragon: 'Dragón',
+      dark: 'Siniestro',
+      steel: 'Acero',
+      fairy: 'Hada'
+    }
+    return translations[type] || type.charAt(0).toUpperCase() + type.slice(1)
+  }
+
+  const translateAbility = (ability) => {
+    const abilityTranslations = {
+      'overgrow': 'Espesura',
+      'chlorophyll': 'Clorofila',
+      'blaze': 'Mar Llamas',
+      'solar-power': 'Poder Solar',
+      'torrent': 'Torrente',
+      'rain-dish': 'Cura Lluvia',
+      'shield-dust': 'Polvo Escudo',
+      'run-away': 'Fuga',
+      'levitate': 'Levitación',
+      'neutralizing-gas': 'Gas Reactivo',
+      'stench': 'Hedor'
+    }
+    
+    const cleanAbility = ability?.toLowerCase().replace(/ /g, '-') || ''
+    return abilityTranslations[cleanAbility] || (ability?.charAt(0).toUpperCase() + ability?.slice(1).replace('-', ' ') || '')
+  }
+
   return (
     <div className="App">
       <header className="header">
@@ -179,9 +239,32 @@ function App() {
           <PokemonList 
             pokemon={filteredPokemon} 
             selectedGeneration={selectedGeneration}
+            onToggleFavorite={toggleFavorite}
+            onToggleTeam={toggleTeamMember}
+            isFavorite={isFavorite}
+            isInTeam={isInTeam}
+            canAddToTeam={(pokemon) => team.length < 6 || isInTeam(pokemon.id)}
           />
         )}
       </main>
+
+      {/* Botón flotante del equipo */}
+      {!loading && (
+        <FloatingTeamButton 
+          teamCount={team.length}
+          onClick={() => setShowTeamModal(true)}
+        />
+      )}
+
+      {/* Modal del equipo */}
+      <TeamViewer
+        team={team}
+        isOpen={showTeamModal}
+        onClose={() => setShowTeamModal(false)}
+        onRemoveFromTeam={toggleTeamMember}
+        translateType={translateType}
+        translateAbility={translateAbility}
+      />
     </div>
   )
 }

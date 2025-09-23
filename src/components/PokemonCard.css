@@ -20,6 +20,61 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pokemon-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.favorite-btn,
+.team-btn {
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid transparent;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.favorite-btn:hover {
+  background: rgba(255, 107, 107, 0.1);
+  border-color: #ff6b6b;
+  transform: scale(1.1);
+}
+
+.favorite-btn.active {
+  background: rgba(255, 107, 107, 0.2);
+  border-color: #ff6b6b;
+}
+
+.team-btn:hover:not(.disabled) {
+  background: rgba(255, 193, 7, 0.1);
+  border-color: #ffc107;
+  transform: scale(1.1);
+}
+
+.team-btn.active {
+  background: rgba(255, 193, 7, 0.2);
+  border-color: #ffc107;
+}
+
+.team-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.team-btn.disabled:hover {
+  transform: none;
+  background: rgba(255, 255, 255, 0.8);
+  border-color: transparent;
 }
 
 .pokemon-id {
@@ -187,6 +242,23 @@
     padding: 15px;
   }
   
+  .pokemon-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .pokemon-actions {
+    align-self: flex-end;
+  }
+  
+  .favorite-btn,
+  .team-btn {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+  
   .pokemon-name {
     font-size: 1.2rem;
   }
@@ -212,9 +284,8 @@
   }
   
   .pokemon-card-header {
-    flex-direction: column;
-    gap: 5px;
     text-align: center;
+    align-items: center;
   }
   
   .pokemon-name {
@@ -224,5 +295,12 @@
   .pokemon-image {
     width: 90px;
     height: 90px;
+  }
+  
+  .favorite-btn,
+  .team-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 0.9rem;
   }
 }

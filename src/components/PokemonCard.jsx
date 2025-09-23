@@ -1,7 +1,7 @@
 import React from 'react'
 import './PokemonCard.css'
 
-const PokemonCard = ({ pokemon }) => {
+const PokemonCard = ({ pokemon, onToggleFavorite, onToggleTeam, isFavorite, isInTeam, canAddToTeam }) => {
   const getTypeColor = (type) => {
     const colors = {
       normal: '#A8A878',
@@ -238,6 +238,29 @@ const PokemonCard = ({ pokemon }) => {
       <div className="pokemon-card-header">
         <span className="pokemon-id">{formatPokemonId(pokemon.id)}</span>
         <h3 className="pokemon-name">{capitalizeFirstLetter(pokemon.name)}</h3>
+        <div className="pokemon-actions">
+          <button
+            className={`favorite-btn ${isFavorite ? 'active' : ''}`}
+            onClick={() => onToggleFavorite(pokemon)}
+            title={isFavorite ? 'Quitar de favoritos' : 'Agregar a favoritos'}
+          >
+            {isFavorite ? '❤️' : '🤍'}
+          </button>
+          <button
+            className={`team-btn ${isInTeam ? 'active' : ''} ${!canAddToTeam && !isInTeam ? 'disabled' : ''}`}
+            onClick={() => onToggleTeam(pokemon)}
+            disabled={!canAddToTeam && !isInTeam}
+            title={
+              isInTeam 
+                ? 'Quitar del equipo' 
+                : canAddToTeam 
+                  ? 'Agregar al equipo' 
+                  : 'Equipo lleno (6/6)'
+            }
+          >
+            {isInTeam ? '⭐' : '☆'}
+          </button>
+        </div>
       </div>
       
       <div className="pokemon-image-container">

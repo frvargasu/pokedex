@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PokemonCard from './PokemonCard'
 import './PokemonList.css'
 
-const PokemonList = ({ pokemon, selectedGeneration }) => {
+const PokemonList = ({ pokemon, selectedGeneration, onToggleFavorite, onToggleTeam, isFavorite, isInTeam, canAddToTeam }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const pokemonPerPage = 20
 
@@ -94,7 +94,15 @@ const PokemonList = ({ pokemon, selectedGeneration }) => {
 
       <div className="pokemon-grid">
         {currentPokemon.map((poke) => (
-          <PokemonCard key={poke.id} pokemon={poke} />
+          <PokemonCard 
+            key={poke.id} 
+            pokemon={poke}
+            onToggleFavorite={onToggleFavorite}
+            onToggleTeam={onToggleTeam}
+            isFavorite={isFavorite(poke.id)}
+            isInTeam={isInTeam(poke.id)}
+            canAddToTeam={canAddToTeam(poke)}
+          />
         ))}
       </div>
 
